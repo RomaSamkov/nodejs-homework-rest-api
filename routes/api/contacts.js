@@ -1,23 +1,23 @@
 const express = require("express");
 const { schemaValidation } = require("../../middlewares/validationMiddleware");
 const {
-  getAllContacts,
-  getContactById,
-  addContact,
-  deleteContact,
-  updateContact,
+  getAllContactsController,
+  getContactByIdController,
+  addContactController,
+  deleteContactController,
+  updateContactController,
 } = require("../../controllers/contactControllers");
 
 const router = express.Router();
 
-router.get("/", getAllContacts);
+router.get("/", getAllContactsController);
 
-router.get("/:contactId", getContactById);
+router.get("/:contactId", getContactByIdController);
 
-router.post("/", schemaValidation, addContact);
+router.post("/", schemaValidation, addContactController);
 
-router.delete("/:contactId", deleteContact);
+router.delete("/:contactId", deleteContactController);
 
-router.put("/:contactId", schemaValidation, updateContact);
+router.put("/:contactId", schemaValidation, updateContactController);
 
 module.exports = router;
