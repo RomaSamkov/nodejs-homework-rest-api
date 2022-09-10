@@ -1,25 +1,41 @@
-const express = require('express')
+const express = require("express");
 
-const router = express.Router()
+const contactsOperations = require("../../models/contacts");
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+const router = express.Router();
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get("/", async (req, res, next) => {
+  const contacts = await contactsOperations.listContacts();
+  res.status(200).json({ status: "success", code: 200, data: contacts });
+});
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get("/:contactId", async (req, res, next) => {
+  const { contactId } = req.params;
+  const contact = await contactsOperations.getContactById(contactId);
+  contact
+    ? res.status(200).json({ status: "success", data: contact })
+    : res.status(404).json({ message: "Not found" });
+});
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.post("/", async (req, res, next) => {
+  const contact = await contactsOperations.addContact(req.body);
+  res.status(201).json({ status: "success", data: contact });
+});
 
-router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.delete("/:contactId", async (req, res, next) => {
+  const { contactId } = req.params;
+  const contact = await contactsOperations.removeContact(contactId);
+  contact
+    ? res.status(200).json({ message: "contact deleted" })
+    : res.status(404).json({ message: "Not found" });
+});
 
-module.exports = router
+router.put("/:contactId", async (req, res, next) => {
+  const { contactId } = req.params;
+  const contact = await contactsOperations.updateContact(contactId, req.body);
+  contact
+    ? res.status(200).json({ data: contact })
+    : res.status(404).json({ message: "Not found" });
+});
+
+module.exports = router;
