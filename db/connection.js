@@ -5,8 +5,8 @@ const url = process.env.DB_HOST;
 
 const connection = async () => {
   return mongoose.connect(url, {
-    promiseLibrary: global.Promise,
-    useUnifiedTopology: true,
+    // promiseLibrary: global.Promise,
+    // useUnifiedTopology: true,
   });
 };
 
