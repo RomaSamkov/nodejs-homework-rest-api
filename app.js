@@ -2,7 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const createError = require("http-errors");
-const handlerCatchErrors = require("./middlewares/errorHandler");
+const handleCatchErrors = require("./middlewares/errorHandler");
 
 const contactsRouter = require("./routes/api/contacts");
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/api/contacts", contactsRouter);
 
 app.use(
-  handlerCatchErrors((req, res, next) => {
+  handleCatchErrors((req, res, next) => {
     next(createError(404));
   })
 );
