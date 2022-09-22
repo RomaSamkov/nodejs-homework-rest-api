@@ -1,4 +1,4 @@
-function handlerCatchErrors(middleware) {
+function handleCatchErrors(middleware) {
   return async function (req, res, next) {
     try {
       await middleware(req, res, next);
@@ -8,4 +8,4 @@ function handlerCatchErrors(middleware) {
   };
 }
 
-module.exports = handlerCatchErrors;
+module.exports = handleCatchErrors;
