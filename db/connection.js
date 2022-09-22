@@ -4,10 +4,7 @@ require("dotenv").config();
 const url = process.env.DB_HOST;
 
 const connection = async () => {
-  return mongoose.connect(url, {
-    // promiseLibrary: global.Promise,
-    // useUnifiedTopology: true,
-  });
+  return mongoose.connect(url);
 };
 
 module.exports = {
