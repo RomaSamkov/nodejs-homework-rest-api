@@ -1,6 +1,7 @@
 const { Contact } = require("../schemas/contacts");
 
-const getAll = async () => await Contact.find({});
+const getAll = async (skip, limit, filter) =>
+  await Contact.find({}).select({ _v: 0 }).skip(skip).limit(limit).sort(filter);
 
 const getById = async (id) => await Contact.findById(id);
 
