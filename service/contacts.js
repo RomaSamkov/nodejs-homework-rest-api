@@ -1,7 +1,13 @@
 const db = require("../db/contacts");
 const isValid = require("mongoose").Types.ObjectId.isValid;
 
-const getAllContacts = async () => await db.getAll();
+const getAllContacts = async (skip, limit, favorite) => {
+  let filter = null;
+  if (favorite) {
+    filter = { filter: -1 };
+  }
+  return await db.getAll(skip, limit, filter);
+};
 
 const getContactById = async (id) => {
   if (!isValid(id)) return false;
