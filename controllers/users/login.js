@@ -9,8 +9,8 @@ const login = async (req, res, next) => {
     next(createError(401, "Email or password is wrong"));
     return;
   }
-  const comparePassword = await bcrypt.compare(password, user.password);
-  if (!comparePassword) {
+  const isSamePassword = await bcrypt.compare(password, user.password);
+  if (!isSamePassword) {
     next(createError(401, "Email or password is wrong"));
     return;
   }
