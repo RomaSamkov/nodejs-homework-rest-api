@@ -1,26 +1,20 @@
-const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
-const contactsSchema = new Schema({
-  name: {
-    type: String,
-    required: [true, "Set name for contact"],
-  },
-  email: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-  },
+const contact = Joi.object({
+  name: Joi.string().min(3),
+  email: Joi.string().email(),
+  phone: Joi.string()
+    .pattern(/^[0-9-]+$/)
+    .min(7)
+    .required(),
+  favorite: Joi.boolean(),
 });
 
-const Contact = model("Contact", contactsSchema);
+const status = Joi.object({
+  favorite: Joi.boolean().required(),
+});
 
-module.exports = { Contact };
+module.exports = {
+  contact,
+  status,
+};
