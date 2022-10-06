@@ -1,9 +1,7 @@
-const currentUser = async (req, res, next) => {
+const getCurrent = (req, res) => {
   const { email, subscription } = req.user;
-  res.status(200).json({
-    email,
-    subscription,
-  });
+
+  res.status(200).json({ email, subscription });
 };
 
-module.exports = currentUser;
+module.exports = getCurrent;
