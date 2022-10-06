@@ -1,5 +1,5 @@
 module.exports = [
-  "./connections.js",
+  "./connection.js",
   "./contactModel.js",
   "./userModel.js",
 ].reduce((obj, file) => {
