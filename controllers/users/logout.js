@@ -1,8 +1,9 @@
-const service = require("../../service/users");
+const { users: usersOperations } = require("../../service");
 
-const logout = async (req, res, next) => {
-  const { token, email } = req.user;
-  await service.userLogout(email, token);
+const logout = async (req, res) => {
+  const user = req.user;
+  await usersOperations.logout(user._id);
+
   res.status(204).json({});
 };
 
