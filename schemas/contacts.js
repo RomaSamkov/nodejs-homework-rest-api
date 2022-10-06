@@ -2,7 +2,10 @@ const Joi = require("joi");
 
 const contact = Joi.object({
   name: Joi.string().min(3),
-  email: Joi.string().email(),
+  email: Joi.string().email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "net"] },
+  }),
   phone: Joi.string()
     .pattern(/^[0-9-]+$/)
     .min(7)
