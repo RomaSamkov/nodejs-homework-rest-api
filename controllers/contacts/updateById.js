@@ -1,18 +1,16 @@
-const service = require("../../service/contacts");
+const { contacts: contactsOperations } = require("../../service");
 
-const updateById = async (req, res, next) => {
-  const { email, name, phone } = req.body;
-  const { contactId } = req.params;
-  const contact = await service.updateContact(contactId, {
-    email,
-    name,
-    phone,
-  });
-  if (contact) {
-    res.status(200).json({ status: "success", data: contact });
-  } else {
-    next();
-  }
+const updateById = async (req, res) => {
+  const { _id: userId } = req.user;
+  const contactId = req.params.contactId;
+
+  const updatedContact = await contactsOperations.updateContact(
+    contactId,
+    req.body,
+    userId
+  );
+
+  res.status(200).json({ status: "success", updatedContact });
 };
 
 module.exports = updateById;
