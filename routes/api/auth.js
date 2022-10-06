@@ -1,20 +1,32 @@
 const express = require("express");
-const { validationMiddleware } = require("../../middlewares/userValidation");
-const { authMiddleware } = require("../../middlewares/tokenValidation");
-const handleCatchErrors = require("../../middlewares/errorHandler");
-
+const { ctrlWrapper } = require("../../helpers");
 const { users: ctrl } = require("../../controllers");
+const { auth, validation } = require("../../middlewares");
+const { userJoiSchema } = require("../../schemas");
 
 const router = express.Router();
 
-router.post("/signup", validationMiddleware, handleCatchErrors(ctrl.register));
+router.post(
+  "/register",
+  validation(userJoiSchema.userSchema),
+  ctrlWrapper(ctrl.register)
+);
 
-router.post("/login", validationMiddleware, handleCatchErrors(ctrl.login));
+router.post(
+  "/login",
+  validation(userJoiSchema.userSchema),
+  ctrlWrapper(ctrl.login)
+);
 
-router.get("/logout", authMiddleware, handleCatchErrors(ctrl.logout));
+router.post("/logout", auth, ctrlWrapper(ctrl.logout));
 
-router.get("/current", authMiddleware, handleCatchErrors(ctrl.getCurrent));
+router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
 
-router.patch("/:userId", handleCatchErrors(ctrl.updateSubscription));
+router.patch(
+  "/",
+  validation(userJoiSchema.subscriptionSchema),
+  auth,
+  ctrlWrapper(ctrl.updateSubscription)
+);
 
 module.exports = router;
