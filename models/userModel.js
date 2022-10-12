@@ -19,7 +19,7 @@ const userShema = mongoose.Schema(
       default: "starter",
     },
     token: { type: String, default: null },
-    avatarUrl: {
+    avatarURL: {
       type: String,
       required: true,
     },
