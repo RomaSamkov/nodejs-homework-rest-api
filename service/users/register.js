@@ -8,8 +8,8 @@ const register = async ({ password, email, subscription }) => {
   if (user) {
     throw RequestError(409, `Email ${email} in use.`);
   }
-  const avatarUrl = gravatar.url(email);
-  const newUser = new User({ password, email, subscription, avatarUrl });
+  const avatarURL = gravatar.url(email);
+  const newUser = new User({ password, email, subscription, avatarURL });
   await newUser.save();
 
   return newUser;
