@@ -9,12 +9,12 @@ const { SECRET_KEY } = process.env;
 const login = async (password, email) => {
   const user = await User.findOne({ email });
 
-  if (!user) {
-    throw RequestError(401, "Email or password is wrong.");
-  }
-
-  if (!(await bcrypt.compare(password, user.password))) {
-    throw RequestError(401, "Email or password is wrong.");
+  if (
+    !user ||
+    !user.verify ||
+    !(await bcrypt.compare(password, user.password))
+  ) {
+    throw RequestError(401, "Email or password is wrong or not verified.");
   }
 
   const token = await jwt.sign({ id: user._id, email }, SECRET_KEY, {
